@@ -544,12 +544,15 @@ function domainbox_RegisterDomain($params)
     $registrant->State = $params['state'];
     $registrant->Postcode = $params['postcode'];
     $localTelephone = str_replace(' ', '', $params['adminphonenumber']);
-    if (substr($localTelephone, 0, 1) == "0")
-    {
-        $localTelephone = substr($localTelephone, 1);
-    }
-    $registrant->Telephone = $localTelephone;
-
+     if (substr($localTelephone, 0, 1) == "+")
+     {
+      $localTelephone = str_replace('.', '', $localTelephone);
+     }
+     else
+     {
+      $localTelephone = $phoneCountryCode . "." . $localTelephone;
+     }
+     $registrant->Telephone = $localTelephone;
     // Work out what additional parameters we need
     switch ($tld)
     {
@@ -632,12 +635,17 @@ function domainbox_RegisterDomain($params)
     $admin->Street2 = $params['adminaddress2'];
     $admin->State = $params['adminstate'];
     $admin->Postcode = $params['adminpostcode'];
-    $localTelephone = str_replace(' ', '', $params['adminphonenumber']);
-    if (substr($localTelephone, 0, 1) == "0")
-    {
-        $localTelephone = substr($localTelephone, 1);
-    }
-    $admin->Telephone =  $localTelephone;
+     $localTelephone = str_replace(' ', '', $params['adminphonenumber']);
+     if (substr($localTelephone, 0, 1) == "+")
+     {
+      $localTelephone = str_replace('.', '', $localTelephone);
+     }
+     else
+     {
+      $localTelephone = $phoneCountryCode . "." . $localTelephone;
+     }
+     $admin->Telephone = $localTelephone;
+    
 
     $billing = new Contact();
     $billing->City = $params["admincity"];
@@ -649,10 +657,14 @@ function domainbox_RegisterDomain($params)
     $billing->State = $params['adminstate'];
     $billing->Postcode = $params['adminpostcode'];
     $localTelephone = str_replace(' ', '', $params['adminphonenumber']);
-    if (substr($localTelephone, 0, 1) == "0")
-    {
-        $localTelephone = substr($localTelephone, 1);
-    }
+     if (substr($localTelephone, 0, 1) == "+")
+     {
+     $localTelephone = str_replace('.', '', $localTelephone);
+     }
+     else
+     {
+     $localTelephone = $phoneCountryCode . "." . $localTelephone;
+     }
     $billing->Telephone = $localTelephone;
 
     $tech = new Contact();
@@ -665,10 +677,14 @@ function domainbox_RegisterDomain($params)
     $tech->State = $params['adminstate'];
     $tech->Postcode = $params['adminpostcode'];
     $localTelephone = str_replace(' ', '', $params['adminphonenumber']);
-    if (substr($localTelephone, 0, 1) == "0")
-    {
-        $localTelephone = substr($localTelephone, 1);
-    }
+     if (substr($localTelephone, 0, 1) == "+")
+     {
+     $localTelephone = str_replace('.', '', $localTelephone);
+     }
+     else
+     {
+     $localTelephone = $phoneCountryCode . "." . $localTelephone;
+     }
     $tech->Telephone = $localTelephone;
 
     $contacts = new Contacts();
